@@ -1,0 +1,1361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>DASH</title>
+    <meta
+      name="description"
+      content="DASH — premium sneakers built for the street. Explore the latest drop."
+    />
+    <meta name="theme-color" content="#222222" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap"
+    />
+    <style>
+      :root {
+        --ink: #000;
+        --paper: #e9e9e6;
+        --k: #000;
+        --w: #e9e9e6;
+        --char: #222;
+        --mute: #6d6d66;
+        --acc: #35553a;
+        --at: #7fb08a;
+        --d: "Anton", "Impact", "Arial Narrow", sans-serif;
+        --b: "Inter", system-ui, sans-serif;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --ink: #e9e9e6;
+          --paper: #0d0d0d;
+          --mute: #8a8a84;
+        }
+      }
+      :root[data-theme="dark"] {
+        --ink: #e9e9e6;
+        --paper: #0d0d0d;
+        --mute: #8a8a84;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        height: 100%;
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 15px/1.5 var(--b);
+        min-height: 100%;
+        overflow-x: hidden;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--at);
+        outline-offset: 3px;
+      }
+      h1,
+      h2,
+      h3 {
+        font: 400 1em/0.9 var(--d);
+        text-transform: uppercase;
+      }
+      nav {
+        position: fixed;
+        top: env(safe-area-inset-top, 0px);
+        left: 0;
+        right: 0;
+        z-index: 50;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 4vw;
+        mix-blend-mode: difference;
+        color: #fff;
+      }
+      .logo {
+        font: 400 30px var(--d);
+        letter-spacing: 0.05em;
+      }
+      nav div {
+        display: flex;
+        gap: 24px;
+        font-weight: 500;
+      }
+      main {
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+      }
+      main.out {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      .btn {
+        display: inline-block;
+        background: var(--acc);
+        color: #fff;
+        padding: 16px 30px;
+        font-weight: 600;
+        text-align: center;
+        transition: transform 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn.k {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .btn.o {
+        background: none;
+        border: 1.5px solid var(--ink);
+        color: var(--ink);
+      }
+      /* shoe */
+      .sh {
+        width: 100%;
+        height: auto;
+        display: block;
+        overflow: visible;
+      }
+      .sh path {
+        transition: fill 0.5s;
+      }
+      .sh .u {
+        fill: var(--u);
+      }
+      .sh .u2 {
+        fill: var(--u2);
+      }
+      .sh .a {
+        fill: var(--a);
+      }
+      .sh .s {
+        fill: var(--s);
+      }
+      .sh g {
+        stroke: var(--lc);
+        transition: stroke 0.5s;
+      }
+      .sh .tr {
+        stroke: #0003;
+        fill: none;
+        stroke-width: 3;
+      }
+      /* hero */
+      .hero {
+        position: relative;
+        height: 100vh;
+        height: 100svh;
+        min-height: 560px;
+        background: var(--char);
+        color: #fff;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+      .hero .media {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero .media .crop {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0.72;
+      }
+      .hero .bg,
+      .hero .cp {
+        z-index: 1;
+      }
+      .hero .bg {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font: 400 clamp(150px, 44vw, 640px)/0.8 var(--d);
+        color: #ffffff12;
+        padding-left: 2vw;
+        user-select: none;
+      }
+      .shw {
+        position: relative;
+        width: min(150vw, 1180px);
+        margin-top: -6vh;
+        animation: shin 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+      @keyframes shin {
+        from {
+          opacity: 0;
+          transform: translateX(-20%) rotate(-10deg) scale(0.9);
+        }
+      }
+      .shw > div {
+        will-change: transform;
+      }
+      .shw .sh {
+        animation: fl 6s ease-in-out infinite;
+      }
+      @keyframes fl {
+        50% {
+          translate: 0 -10px;
+        }
+      }
+      .hero .cp {
+        position: absolute;
+        left: 4vw;
+        right: 4vw;
+        bottom: 5vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .hero h1 {
+        font-size: clamp(46px, 8vw, 124px);
+      }
+      .hero p {
+        max-width: 30ch;
+        color: #bbb;
+        margin: 12px 0 0;
+      }
+      .mq {
+        background: var(--acc);
+        color: #fff;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 14px 0;
+      }
+      .mq div {
+        display: inline-block;
+        font: 400 clamp(26px, 5vw, 60px)/1 var(--d);
+        text-transform: uppercase;
+        animation: mq 30s linear infinite;
+      }
+      .mq span {
+        margin: 0 2.2vw;
+      }
+      .mq span:after {
+        content: "/";
+        margin-left: 4.4vw;
+        opacity: 0.5;
+      }
+      @keyframes mq {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      section {
+        padding: 12vh 4vw;
+      }
+      .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 14px;
+        margin-bottom: 5vh;
+      }
+      .head h2 {
+        font-size: clamp(48px, 9vw, 140px);
+      }
+      .head a {
+        font-weight: 600;
+        border-bottom: 2px solid var(--ink);
+      }
+      /* spotlight */
+      .spot {
+        background: var(--k);
+        color: var(--w);
+        overflow: hidden;
+        padding: 11vh 0 9vh;
+      }
+      .spot .t {
+        padding: 0 4vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .spot h2 {
+        font-size: clamp(60px, 12vw, 190px);
+      }
+      .stage {
+        position: relative;
+        width: min(92vw, 980px);
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 3vh;
+      }
+      .stage .photo {
+        width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+        display: block;
+      }
+      .pin {
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #fff;
+        color: #000;
+        font-weight: 700;
+        translate: -50% -50%;
+        z-index: 2;
+      }
+      .pin:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1.5px solid #fff;
+        animation: pl 2s infinite;
+      }
+      @keyframes pl {
+        to {
+          transform: scale(1.9);
+          opacity: 0;
+        }
+      }
+      .pin span {
+        position: absolute;
+        left: 44px;
+        top: 50%;
+        translate: 0 -50%;
+        width: 160px;
+        text-align: left;
+        background: var(--paper);
+        color: var(--ink);
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.3;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+        font-weight: 400;
+      }
+      .pin.l span {
+        left: auto;
+        right: 44px;
+      }
+      .pin.on span,
+      .pin:hover span {
+        opacity: 1;
+      }
+      .spot .b {
+        padding: 0 4vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .sw {
+        display: flex;
+        gap: 14px;
+      }
+      .sw button {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 3px solid var(--k);
+        outline: 1.5px solid var(--ink);
+        outline-offset: 1px;
+        transition: transform 0.2s;
+      }
+      .sw button.on {
+        outline-width: 3px;
+        transform: scale(1.1);
+      }
+      .spot .sw button {
+        border-color: var(--k);
+        outline-color: var(--w);
+      }
+      /* cards */
+      .row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+      }
+      .pc {
+        display: block;
+        min-width: 0;
+      }
+      .pc .im {
+        aspect-ratio: 1/1;
+        display: grid;
+        place-items: center;
+        padding: 6%;
+        transition: background 0.4s;
+        overflow: hidden;
+      }
+      .photo {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .photo.contain {
+        object-fit: contain;
+      }
+      .pc .im .photo {
+        object-fit: contain;
+        transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .pc .im .photo {
+        transform: scale(0.94);
+      }
+      .pc:hover .im .photo {
+        transform: scale(0.99);
+      }
+      .pc .nm {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 10px;
+        font-weight: 500;
+      }
+      .pc .nm span:last-child {
+        color: var(--mute);
+        white-space: nowrap;
+      }
+      .pc .cl {
+        color: var(--mute);
+        font-size: 13px;
+      }
+      .stmt {
+        padding: 20vh 4vw;
+      }
+      .stmt h2 {
+        font-size: clamp(52px, 11vw, 180px);
+      }
+      .stmt h2 span {
+        color: var(--mute);
+        transition: color 0.8s;
+      }
+      .stmt.on h2 span {
+        color: var(--ink);
+      }
+      .stmt h2 span:nth-child(2) {
+        transition-delay: 0.15s;
+      }
+      .stmt h2 span:nth-child(3) {
+        transition-delay: 0.3s;
+      }
+      footer {
+        background: var(--k);
+        color: var(--w);
+        padding: 10vh 4vw 6vh;
+      }
+      footer .big {
+        font: 400 clamp(100px, 30vw, 460px)/0.8 var(--d);
+      }
+      footer .r {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px 30px;
+        margin-top: 6vh;
+        font-weight: 500;
+        justify-content: space-between;
+      }
+      footer .r div {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .rv {
+        opacity: 0;
+        transform: translateY(36px);
+        transition:
+          opacity 0.8s,
+          transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .rv.on {
+        opacity: 1;
+        transform: none;
+      }
+      /* shop */
+      .shop {
+        padding: 120px 4vw 10vh;
+      }
+      .shop h1 {
+        font-size: clamp(70px, 14vw, 220px);
+        margin-bottom: 4vh;
+      }
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 2px solid var(--ink);
+        border-bottom: 1px solid var(--ink);
+        padding: 14px 0;
+        margin-bottom: 5vh;
+      }
+      .tabs {
+        display: flex;
+        gap: 6px 22px;
+        flex-wrap: wrap;
+        font-weight: 600;
+      }
+      .tabs button {
+        padding: 4px 0;
+        border-bottom: 2px solid transparent;
+      }
+      .tabs button.on {
+        border-color: var(--acc);
+      }
+      .bar select {
+        background: var(--paper);
+        color: var(--ink);
+        border: 1px solid var(--ink);
+        padding: 9px 12px;
+        font: inherit;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 36px 22px;
+      }
+      .grid .pc {
+        animation: in 0.5s both;
+      }
+      @keyframes in {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+      }
+      /* product */
+      .prod {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.75fr);
+        gap: 5vw;
+        padding: 100px 4vw 8vh;
+        align-items: start;
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+      .pst {
+        position: sticky;
+        top: 84px;
+        width: 100%;
+        max-width: 680px;
+        aspect-ratio: 1/1;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        transition: background 0.5s;
+        margin: 0 auto;
+      }
+      .pst .photo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: scale(0.96);
+        transition: transform 0.25s;
+      }
+      .gallery {
+        display: none;
+      }
+      .info h1 {
+        font-size: clamp(50px, 6vw, 96px);
+        margin: 10px 0 12px;
+      }
+      .price {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .lbl {
+        font-weight: 600;
+        margin: 24px 0 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .lbl button {
+        border-bottom: 1px solid;
+        font-weight: 500;
+      }
+      .opts {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .opts button {
+        border: 1.5px solid var(--ink);
+        min-width: 54px;
+        padding: 12px 14px;
+        font-weight: 600;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .opts button.on {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .acts {
+        display: grid;
+        gap: 10px;
+        margin: 28px 0;
+      }
+      details {
+        border-top: 1px solid var(--ink);
+        padding: 14px 0;
+      }
+      details:last-of-type {
+        border-bottom: 1px solid var(--ink);
+      }
+      summary {
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+      }
+      summary:after {
+        content: "+";
+      }
+      details[open] summary:after {
+        content: "\2212";
+      }
+      details p {
+        margin-top: 8px;
+        color: var(--mute);
+      }
+      .sticky {
+        display: none;
+      }
+      .more {
+        padding: 0 4vw 10vh;
+      }
+      .more h2 {
+        font-size: clamp(40px, 7vw, 100px);
+        margin-bottom: 4vh;
+      }
+      /* drawer */
+      .veil {
+        position: fixed;
+        inset: 0;
+        background: #000a;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s;
+        z-index: 80;
+      }
+      .veil.on {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(440px, 100%);
+        background: var(--paper);
+        z-index: 90;
+        transform: translateX(102%);
+        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        padding: 24px;
+        padding-top: calc(24px + env(safe-area-inset-top, 0px));
+        padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+        display: flex;
+        flex-direction: column;
+      }
+      .drawer.on {
+        transform: none;
+      }
+      .drawer .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .drawer h3 {
+        font-size: 44px;
+      }
+      .drawer .body {
+        flex: 1;
+        overflow: auto;
+        margin: 10px 0;
+      }
+      .li {
+        display: grid;
+        grid-template-columns: 84px 1fr auto;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid var(--ink);
+        align-items: center;
+      }
+      .li .im {
+        aspect-ratio: 1/1;
+        display: grid;
+        place-items: center;
+        padding: 6px;
+      }
+      .li b {
+        display: block;
+      }
+      .li span {
+        color: var(--mute);
+        font-size: 14px;
+      }
+      .qty {
+        display: inline-flex;
+        border: 1px solid var(--ink);
+        margin-top: 8px;
+      }
+      .qty button {
+        width: 32px;
+        height: 32px;
+      }
+      .qty em {
+        width: 32px;
+        text-align: center;
+        font-style: normal;
+        line-height: 32px;
+      }
+      .rm {
+        color: var(--mute);
+        text-decoration: underline;
+        font-size: 13px;
+        display: block;
+        margin: 6px 0 0 auto;
+      }
+      .tot {
+        display: flex;
+        justify-content: space-between;
+        font: 400 44px/1 var(--d);
+        border-top: 2px solid var(--ink);
+        padding-top: 16px;
+        margin-bottom: 16px;
+      }
+      .empty {
+        padding: 6vh 0;
+        color: var(--mute);
+      }
+      .modal {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -46%);
+        opacity: 0;
+        pointer-events: none;
+        background: var(--paper);
+        z-index: 95;
+        width: min(500px, 92vw);
+        padding: 26px;
+        transition: 0.35s;
+      }
+      .modal.on {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%);
+      }
+      .modal table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0;
+      }
+      .modal td,
+      .modal th {
+        padding: 9px 6px;
+        border-bottom: 1px solid var(--mute);
+        text-align: left;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+        transform: translate(-50%, 140px);
+        background: var(--ink);
+        color: var(--paper);
+        padding: 14px 22px;
+        z-index: 120;
+        transition: transform 0.4s;
+        font-weight: 500;
+      }
+      .toast.on {
+        transform: translate(-50%, 0);
+      }
+      @media (max-width: 820px) {
+        nav div {
+          gap: 16px;
+        }
+        section {
+          padding: 9vh 4vw;
+        }
+        .row {
+          grid-auto-flow: column;
+          grid-auto-columns: 74vw;
+          grid-template-columns: none;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          margin: 0 -4vw;
+          padding: 0 4vw;
+          scrollbar-width: none;
+        }
+        .row::-webkit-scrollbar {
+          display: none;
+        }
+        .row .pc {
+          scroll-snap-align: start;
+        }
+        .grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 26px 12px;
+        }
+        .grid .pc .im {
+          padding: 7%;
+        }
+        .prod {
+          grid-template-columns: 1fr;
+          padding: 80px 4vw 120px;
+          gap: 28px;
+        }
+        .pst {
+          position: relative;
+          top: 0;
+          width: 100%;
+          max-width: 680px;
+          margin: 0 auto;
+        }
+        .pst .photo {
+          transform: scale(0.94);
+        }
+        .stage {
+          width: 100%;
+          margin-top: 2vh;
+        }
+        .stage .photo {
+          max-height: 360px;
+        }
+        .sticky {
+          display: flex;
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 60;
+          background: var(--paper);
+          border-top: 1px solid var(--ink);
+          padding: 10px 4vw calc(10px + env(safe-area-inset-bottom, 0px));
+          gap: 12px;
+          align-items: center;
+        }
+        .sticky .btn {
+          flex: 1;
+          padding: 14px;
+        }
+        .more .row {
+          margin: 0 -4vw;
+        }
+        .head {
+          align-items: start;
+          flex-direction: column;
+        }
+        .pin span {
+          width: 132px;
+          font-size: 12px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        .rv {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="#/">DASH</a>
+      <div>
+        <a href="#/shop">Shop</a
+        ><button id="cartBtn">Cart <span id="cnt">0</span></button>
+      </div>
+    </nav>
+    <main id="app"></main>
+    <div class="veil" id="veil"></div>
+    <aside class="drawer" id="drawer" aria-label="Cart"></aside>
+    <div class="modal" id="modal" role="dialog" aria-label="Size guide">
+      <h3 style="font-size: 40px">Size guide</h3>
+      <table>
+        <tr>
+          <th>EU</th>
+          <th>Foot length (cm)</th>
+        </tr>
+        <tr>
+          <td>40</td>
+          <td>25.0</td>
+        </tr>
+        <tr>
+          <td>41</td>
+          <td>25.7</td>
+        </tr>
+        <tr>
+          <td>42</td>
+          <td>26.3</td>
+        </tr>
+        <tr>
+          <td>43</td>
+          <td>27.0</td>
+        </tr>
+        <tr>
+          <td>44</td>
+          <td>27.7</td>
+        </tr>
+        <tr>
+          <td>45</td>
+          <td>28.3</td>
+        </tr>
+      </table>
+      <p style="color: var(--mute)">
+        Measure your foot heel to toe. Between sizes? Take the larger one.
+      </p>
+      <button class="btn k" style="margin-top: 16px" data-close>Close</button>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+      // EDIT THIS BLOCK TO REBRAND FOR A NEW CLIENT
+      const CFG = {
+        brand: "DASH",
+        city: "Cairo",
+        accent: "#35553a",
+        accentText: "#7fb08a",
+        phone: "201000000000",
+        cur: "EGP",
+      };
+      const CW = {
+        bone: {
+          n: "Bone",
+          u: "#ddd8cc",
+          u2: "#bdb7a8",
+          a: "#35553a",
+          s: "#f4f2ec",
+          lc: "#2a2a28",
+          t: "#cfcabe",
+        },
+        black: {
+          n: "Black",
+          u: "#181818",
+          u2: "#2e2e2e",
+          a: "#e9e9e6",
+          s: "#dcd9d0",
+          lc: "#e9e9e6",
+          t: "#4a4a47",
+        },
+        moss: {
+          n: "Moss",
+          u: "#35553a",
+          u2: "#213a26",
+          a: "#e9e9e6",
+          s: "#ecebe4",
+          lc: "#e9e9e6",
+          t: "#b7c2b1",
+        },
+        stone: {
+          n: "Stone",
+          u: "#a59f8c",
+          u2: "#7d7866",
+          a: "#181818",
+          s: "#f0ede5",
+          lc: "#181818",
+          t: "#d8d3c5",
+        },
+        ash: {
+          n: "Ash",
+          u: "#8b8b86",
+          u2: "#5f5f5b",
+          a: "#e9e9e6",
+          s: "#f2f0ea",
+          lc: "#181818",
+          t: "#c3c3be",
+        },
+      };
+      const IMG = {
+        hero: "https://images.pexels.com/photos/18155790/pexels-photo-18155790.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        white:
+          "https://images.pexels.com/photos/12969390/pexels-photo-12969390.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        red: "https://images.pexels.com/photos/23491456/pexels-photo-23491456.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        black:
+          "https://images.pexels.com/photos/18155790/pexels-photo-18155790.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        redBlack:
+          "https://images.pexels.com/photos/6050917/pexels-photo-6050917.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        whiteFloor:
+          "https://images.pexels.com/photos/10497369/pexels-photo-10497369.jpeg?auto=compress&cs=tinysrgb&w=1400",
+        detail:
+          "https://images.pexels.com/photos/5710074/pexels-photo-5710074.jpeg?auto=compress&cs=tinysrgb&w=1400",
+      };
+      const P = [
+        {
+          id: "dash-01",
+          n: "Dash 01",
+          p: 2900,
+          c: "lifestyle",
+          cw: ["bone", "black", "moss"],
+          d: "The everyday low-top.",
+          img: IMG.white,
+          alt: "Premium sneaker product photograph",
+          detail: IMG.detail,
+        },
+        {
+          id: "dash-runner",
+          n: "Dash Runner",
+          p: 3200,
+          c: "running",
+          cw: ["ash", "black", "stone"],
+          d: "Light, springy, built for daily miles.",
+          img: IMG.detail,
+          alt: "Premium sneaker studio photograph",
+          detail: IMG.whiteFloor,
+        },
+        {
+          id: "dash-high",
+          n: "Dash High",
+          p: 3400,
+          c: "high",
+          cw: ["black", "bone", "moss"],
+          d: "High-top with a locked-in heel.",
+          img: IMG.black,
+          alt: "Black and white premium sneaker photograph",
+          detail: IMG.redBlack,
+        },
+        {
+          id: "dash-court",
+          n: "Dash Court",
+          p: 2700,
+          c: "lifestyle",
+          cw: ["stone", "bone", "ash"],
+          d: "Clean court shape, soft leather feel.",
+          img: IMG.whiteFloor,
+          alt: "White sneaker product photograph",
+          detail: IMG.white,
+        },
+        {
+          id: "dash-sprint",
+          n: "Dash Sprint",
+          p: 3500,
+          c: "running",
+          cw: ["moss", "black", "ash"],
+          d: "Race-day weight, everyday comfort.",
+          img: IMG.redBlack,
+          alt: "Black and white sneaker studio photograph",
+          detail: IMG.red,
+        },
+        {
+          id: "dash-mid",
+          n: "Dash Mid",
+          p: 3100,
+          c: "high",
+          cw: ["ash", "stone", "black"],
+          d: "Mid-cut that goes with everything.",
+          img: IMG.red,
+          alt: "White sneaker on a dark surface",
+          detail: IMG.black,
+        },
+      ];
+      const MAT = {
+        lifestyle: "Leather and mesh upper, EVA midsole, rubber outsole.",
+        running: "Engineered mesh upper, foam midsole, grip outsole.",
+        high: "Leather upper, padded collar, rubber outsole.",
+      };
+      const photo = (url, alt = "", x = "") =>
+        `<img class="photo ${x}" src="${url}" alt="${alt}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+      const swBtns = (p, k) =>
+        p.cw
+          .map(
+            (c, i) =>
+              `<button class="${i === k ? "on" : ""}" data-cw="${c}" aria-label="${CW[c].n}" style="background:${CW[c].u}"></button>`,
+          )
+          .join("");
+      const card = (p) =>
+        `<a class="pc" href="#/p/${p.id}"><div class="im" style="background:${CW[p.cw[0]].t}">${photo(p.img, p.alt, "contain")}</div><div class="nm"><span>${p.n}</span><span>${p.p} ${CFG.cur}</span></div><div class="cl">${p.cw.length} colors</div></a>`;
+      const mq = () =>
+        `<div class="mq" aria-hidden="true"><div>${("<span>New drop</span><span>Move loud</span><span>Built to be seen</span><span>" + CFG.city + "</span>").repeat(4)}</div></div>`;
+      const $ = (s) => document.querySelector(s),
+        $$ = (s) => [...document.querySelectorAll(s)];
+      let cart = [];
+      try {
+        cart = JSON.parse(localStorage.getItem("dash-cart")) || [];
+      } catch (e) {}
+      const total = () =>
+        cart.reduce((a, l) => a + l.q * P.find((x) => x.id === l.id).p, 0);
+      function save() {
+        try {
+          localStorage.setItem("dash-cart", JSON.stringify(cart));
+        } catch (e) {}
+        $("#cnt").textContent = cart.reduce((a, b) => a + b.q, 0);
+        drawer();
+      }
+      function toast(m) {
+        const t = $("#toast");
+        t.textContent = m;
+        t.classList.add("on");
+        clearTimeout(toast.h);
+        toast.h = setTimeout(() => t.classList.remove("on"), 2200);
+      }
+      function lines() {
+        return cart.length
+          ? cart
+              .map((l, i) => {
+                const p = P.find((x) => x.id === l.id);
+                return `<div class="li"><div class="im" style="background:${CW[l.cw].t}">${photo(p.img, p.alt, "contain")}</div><div><b>${p.n}</b><span>${CW[l.cw].n} / EU ${l.size}</span><div class="qty"><button data-q="${i}" data-d="-1" aria-label="Less">-</button><em>${l.q}</em><button data-q="${i}" data-d="1" aria-label="More">+</button></div></div><div><b>${p.p * l.q}</b><button class="rm" data-rm="${i}">Remove</button></div></div>`;
+              })
+              .join("")
+          : '<p class="empty">Your cart is empty. Pick a pair from the latest drop.</p>';
+      }
+      function drawer() {
+        $("#drawer").innerHTML =
+          `<div class="top"><h3>Cart</h3><button data-close aria-label="Close cart" style="font-size:30px">&times;</button></div><div class="body">${lines()}</div><div class="tot"><span>Total</span><span>${total()}</span></div><button class="btn" data-wa ${cart.length ? "" : 'disabled style="opacity:.4"'}>Order via WhatsApp</button>`;
+      }
+      const open = (o, m) => {
+        $(m || "#drawer").classList.toggle("on", o);
+        $("#veil").classList.toggle("on", o);
+      };
+      const closeAll = () => {
+        $("#drawer").classList.remove("on");
+        $("#modal").classList.remove("on");
+        $("#veil").classList.remove("on");
+      };
+      function wa(items) {
+        const L = items
+          .map((l, i) => {
+            const p = P.find((x) => x.id === l.id);
+            return `${i + 1}. ${p.n} | ${CW[l.cw].n} | EU ${l.size} | x${l.q} | ${p.p * l.q} ${CFG.cur}`;
+          })
+          .join("\n");
+        const t = items.reduce(
+          (a, l) => a + l.q * P.find((x) => x.id === l.id).p,
+          0,
+        );
+        window.open(
+          `https://wa.me/${CFG.phone}?text=${encodeURIComponent(`Hi ${CFG.brand}, I'd like to order:\n\n${L}\n\nTotal: ${t} ${CFG.cur}`)}`,
+          "_blank",
+        );
+      }
+      const foot = () =>
+        `<footer><div class="big">${CFG.brand}</div><div class="r"><div><a href="#/shop">Shop</a><button data-cartopen>Cart</button></div><div><button data-ig>Instagram</button><a href="https://wa.me/${CFG.phone}" target="_blank" rel="noopener">WhatsApp</a></div><span style="color:#888">&copy; 2026 ${CFG.brand}. ${CFG.city}.</span></div></footer>`;
+      const V = {
+        home() {
+          const s = P[0];
+          return `<div class="hero"><div class="media"><img src="${IMG.hero}" alt="DASH sneaker editorial photography" class="crop" fetchpriority="high" decoding="async"></div><div class="bg" aria-hidden="true"><span>${CFG.brand}</span></div>
+<div class="cp"><div><h1>Move loud.</h1><p>Drop 01. Six pairs, built for the street and made to be seen.</p></div><a class="btn" href="#/shop">Shop the drop</a></div></div>${mq()}
+<section class="spot"><div class="t rv"><h2>${s.n}</h2><div style="max-width:32ch;color:#bbb">${s.d} Tap the pins to see what makes it work.</div></div>
+<div class="stage rv" id="sp">${photo(s.img, s.alt)}
+<button class="pin" style="left:20%;top:42%" data-pin aria-label="Heel">+<span>Heel lock<br>Supports a secure fit</span></button>
+<button class="pin l" style="left:56%;top:44%" data-pin aria-label="Upper">+<span>Breathable upper<br>Lightweight everyday comfort</span></button>
+<button class="pin l" style="left:72%;top:80%" data-pin aria-label="Sole">+<span>Cushioned sole<br>Soft landing and reliable grip</span></button></div>
+<div class="b rv"><div class="sw" data-target="sp">${swBtns(s, 0)}</div><a class="btn" href="#/p/${s.id}">Get ${s.n} &middot; ${s.p} ${CFG.cur}</a></div></section>
+<section><div class="head rv"><h2>Latest pairs</h2><a href="#/shop">Shop all</a></div><div class="row rv">${P.slice(1, 5).map(card).join("")}</div></section>
+<div class="stmt" id="stmt"><h2><span>Comfort you feel.</span> <span>Style they notice.</span> <span>Pace you own.</span></h2></div>${foot()}`;
+        },
+        shop(c) {
+          c = c || "all";
+          return `<div class="shop"><h1>Shop</h1><div class="bar"><div class="tabs">${[
+            ["all", "All"],
+            ["running", "Running"],
+            ["lifestyle", "Lifestyle"],
+            ["high", "High tops"],
+          ]
+            .map(
+              ([k, n]) =>
+                `<button data-tab="${k}" class="${k === c ? "on" : ""}">${n}</button>`,
+            )
+            .join(
+              "",
+            )}</div><select id="so" aria-label="Sort"><option value="n">Newest</option><option value="a">Price: low to high</option><option value="d">Price: high to low</option></select></div><div class="grid" id="gr"></div></div>${foot()}`;
+        },
+        product(id) {
+          const p = P.find((x) => x.id === id) || P[0],
+            c = CW[p.cw[0]],
+            rel = P.filter((x) => x.id !== p.id).slice(0, 4);
+          return `<div class="prod"><div class="pst" id="pst" style="background:${c.t}">${photo(p.img, p.alt, "contain")}</div>
+<div class="info" data-id="${p.id}"><a href="#/shop" style="color:var(--mute)">&larr; Shop</a><h1>${p.n}</h1><div class="price">${p.p} ${CFG.cur}</div><p style="color:var(--mute);margin-top:6px">${p.d}</p>
+<div class="lbl"><span>Color: <span id="cl">${c.n}</span></span></div><div class="sw" id="sw" data-target="pst">${swBtns(p, 0)}</div>
+<div class="lbl"><span>Size (EU)</span><button data-guide>Size guide</button></div><div class="opts" id="sz">${[40, 41, 42, 43, 44, 45].map((s) => `<button class="${s === 42 ? "on" : ""}" data-s="${s}">${s}</button>`).join("")}</div>
+<div class="acts"><button class="btn k" data-add>Add to cart</button><button class="btn o" data-now>Order via WhatsApp</button></div>
+<details open><summary>Fit</summary><p>True to size. Take the next size up if you have wide feet.</p></details><details><summary>Material</summary><p>${MAT[p.c]}</p></details><details><summary>Care</summary><p>Wipe clean with a damp cloth. Keep away from direct heat.</p></details></div></div>
+<div class="sticky"><b>${p.p} ${CFG.cur}</b><button class="btn k" data-add>Add to cart</button></div>
+<div class="more"><h2>More pairs</h2><div class="row">${rel.map(card).join("")}</div></div>${foot()}`;
+        },
+      };
+      const fill = (c, so) => {
+        let a = P.filter((p) => c === "all" || p.c === c);
+        if (so === "a") a.sort((x, y) => x.p - y.p);
+        if (so === "d") a.sort((x, y) => y.p - x.p);
+        $("#gr").innerHTML = a.map(card).join("");
+      };
+      let cur = "all",
+        io;
+      function route() {
+        const h = location.hash.replace("#/", "").split("/"),
+          m = $("#app");
+        m.classList.add("out");
+        setTimeout(() => {
+          closeAll();
+          const r = h[0];
+          m.innerHTML =
+            r === "shop"
+              ? V.shop(h[1])
+              : r === "p"
+                ? V.product(h[1])
+                : V.home();
+          window.scrollTo({ top: 0, behavior: "instant" });
+          m.classList.remove("out");
+          if (r === "shop") {
+            cur = h[1] || "all";
+            fill(cur, "n");
+          }
+          io && io.disconnect();
+          io = new IntersectionObserver(
+            (es) =>
+              es.forEach((e) => {
+                if (e.isIntersecting) {
+                  e.target.classList.add("on");
+                  io.unobserve(e.target);
+                }
+              }),
+            { threshold: 0.15 },
+          );
+          $$(".rv,.stmt").forEach((e) => io.observe(e));
+        }, 260);
+      }
+      addEventListener("hashchange", route);
+      let tk = 0;
+      addEventListener(
+        "scroll",
+        () => {
+          if (tk) return;
+          tk = requestAnimationFrame(() => {
+            tk = 0;
+            const y = scrollY,
+              h = $("#hp");
+            if (h && y < innerHeight * 1.3)
+              h.style.transform = `translateY(${y * 0.08}px)`;
+          });
+        },
+        { passive: true },
+      );
+      document.addEventListener("mousemove", (e) => {
+        const s = e.target.closest(".pst");
+        if (s) {
+          const r = s.getBoundingClientRect(),
+            x = (e.clientX - r.left) / r.width - 0.5;
+          s.firstElementChild.style.transform = `rotate(${-6 + x * 10}deg) translateX(${x * -18}px)`;
+        }
+      });
+      const selP = () => P.find((x) => x.id === $(".info").dataset.id);
+      const pick = () => ({
+        id: selP().id,
+        cw: $("#sw .on").dataset.cw,
+        size: $("#sz .on").dataset.s,
+        q: 1,
+      });
+      document.addEventListener("click", (e) => {
+        const t = e.target.closest("button,a");
+        if (!t) return;
+        if (t.id === "cartBtn" || t.dataset.cartopen !== undefined) open(true);
+        if (t.dataset.close !== undefined || t.id === "veil") closeAll();
+        if (t.dataset.guide !== undefined) open(true, "#modal");
+        if (t.dataset.pin !== undefined) t.classList.toggle("on");
+        if (t.dataset.tab) {
+          cur = t.dataset.tab;
+          $$(".tabs button").forEach((b) => b.classList.toggle("on", b === t));
+          fill(cur, $("#so").value);
+        }
+        if (t.dataset.cw) {
+          const w = t.parentElement;
+          [...w.querySelectorAll("button")].forEach((b) =>
+            b.classList.toggle("on", b === t),
+          );
+          const c = CW[t.dataset.cw],
+            box = document.getElementById(w.dataset.target);
+          if (box) {
+            box.style.background = c.t;
+            if (box.id === "pst") {
+              box.querySelector("img").style.filter =
+                t.dataset.cw === "black"
+                  ? "brightness(.72) contrast(1.08)"
+                  : t.dataset.cw === "moss"
+                    ? "sepia(.18) saturate(1.18)"
+                    : "none";
+              $("#cl").textContent = c.n;
+            }
+          }
+        }
+        if (t.dataset.s)
+          $$("#sz button").forEach((b) => b.classList.toggle("on", b === t));
+        if (t.dataset.add !== undefined) {
+          const n = pick(),
+            k = cart.find(
+              (l) => l.id === n.id && l.cw === n.cw && l.size === n.size,
+            );
+          k ? k.q++ : cart.push(n);
+          save();
+          toast("Added to cart");
+        }
+        if (t.dataset.now !== undefined) wa([pick()]);
+        if (t.dataset.q !== undefined) {
+          const l = cart[+t.dataset.q];
+          l.q += +t.dataset.d;
+          if (l.q < 1) cart.splice(+t.dataset.q, 1);
+          save();
+        }
+        if (t.dataset.rm !== undefined) {
+          cart.splice(+t.dataset.rm, 1);
+          save();
+        }
+        if (t.dataset.wa !== undefined) wa(cart);
+        if (t.dataset.ig !== undefined)
+          toast("Add your Instagram link in the code");
+      });
+      document.addEventListener("change", (e) => {
+        if (e.target.id === "so") fill(cur, e.target.value);
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAll();
+      });
+      const rs = document.documentElement.style;
+      rs.setProperty("--acc", CFG.accent);
+      rs.setProperty("--at", CFG.accentText);
+      document.title = CFG.brand;
+      $(".logo").textContent = CFG.brand;
+      save();
+      route();
+    </script>
+  </body>
+</html>
